@@ -7,8 +7,8 @@ import scipy.ndimage
 import nibabel as nib
 
 # Apply a Gaussian filter for smooth transitions
-wm_data = nib.load('dataset/WM.nii.gz').get_fdata()
-gm_data = nib.load('dataset/GM.nii.gz').get_fdata()
+wm_data = nib.load('mehdi_data/wm.nii.gz').get_fdata()
+gm_data = nib.load('mehdi_data/gm.nii.gz').get_fdata()
 
 
 # Set up parameters
@@ -22,7 +22,7 @@ parameters = {
     'NyT1_pct': 0.7,
     'NzT1_pct': 0.5,
     'init_scale': 1., #scale of the initial gaussian
-    'resolution_factor': 0.5, #resultion scaling for calculations
+    'resolution_factor': .5, #resultion scaling for calculations
     'th_matter': 0.1, #when to stop diffusing: at th_matter > gm+wm
     'verbose': True, #printing timesteps 
     'time_series_solution_Nt': 50 # number of timesteps in the output
@@ -87,12 +87,7 @@ else:
     print("Error occurred:", result['error'])
 
 #### Saving outputs
-import SimpleITK as itk
-src_itk = itk.ReadImage('dataset/WM.nii.gz')
-final_state = result['final_state']
-write_name = './dataset/simulation.nii.gz'
-itk_final = itk.GetImageFromArray(final_state)
-itk_final.SetSpacing(src_itk.GetSpacing())
-itk_final.SetOrigin(src_itk.GetOrigin())
-itk_final.SetDirection(src_itk.GetDirection())
-itk.WriteImage(itk_final, write_name)
+write_name = './mehdi_data/simulation.nii.gz'
+src_nib = nib.load('./mehdi_data/t1.nii.gz')
+dst_nib = nib.Nifti1Image(result['final_state'], src_nib.affine, src_nib.header)
+nib.save(dst_nib, write_name)
