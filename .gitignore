@@ -1,4 +1,6 @@
 dist/*
 *.pyc
 *.egg-info 
+*.nii.gz
+*.nii
 synthetic_gens/*
