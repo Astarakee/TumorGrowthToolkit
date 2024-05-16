@@ -15,7 +15,7 @@ gm_data = nib.load('mehdi_data/gm.nii.gz').get_fdata()
 parameters = {
     'Dw': 1.0,          # Diffusion coefficient for white matter
     'rho': 0.10,         # Proliferation rate
-    'RatioDw_Dg': 10,  # Ratio of diffusion coefficients in white and grey matter
+    'RatioDw_Dg': 1,  # Ratio of diffusion coefficients in white and grey matter
     'gm': gm_data,      # Grey matter data
     'wm': wm_data,      # White matter data
     'NxT1_pct': 0.3,    # tumor position [%]
@@ -25,7 +25,7 @@ parameters = {
     'resolution_factor': .5, #resultion scaling for calculations
     'th_matter': 0.1, #when to stop diffusing: at th_matter > gm+wm
     'verbose': True, #printing timesteps 
-    'time_series_solution_Nt': 50 # number of timesteps in the output
+    'time_series_solution_Nt': 300 # number of timesteps in the output
     
 }
 
